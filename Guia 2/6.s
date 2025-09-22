@@ -1,0 +1,14 @@
+	.data
+N:	 .word 20
+	.text
+main:
+	la t0, N	# t0 = &N
+	lw t0, 0(t0)	# t0 = *t0
+
+1:
+	
+	
+
+
+	
+	

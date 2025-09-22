@@ -1,0 +1,43 @@
+# Implementar un programa que multiplique los primeros 4 números enteros positivos (empleando bucles)
+
+.data
+array:	 .word 1, 2, 3, 4
+size:	 .word 4
+	
+
+.text
+	.global main
+
+main:
+	la s0, array		# s0 points to array
+	li a0, 1		# Initialize a0
+
+	jal multiplyArray
+
+	li a7, 10
+	ecall
+	
+
+multiplyArray:
+	li s1, 0		# s1 is the index
+	lw t2, size		# size
+
+1:
+	beq s1, t2, 1f		# Stop condition
+
+	slli t0, s1, 2		# t0 = i * 4 (Shift left 2 positions = multiply by 4 bytes)
+
+	add t0, t0, s0		# t0 = &array[i] (its direction, not its value)
+
+	lw t1, 0(t0)		# t1 = *t0
+
+	mul a0, a0, t1		# a0 = a0 * t1
+
+	addi s1, s1, 1		# s1 = s1 + 1
+	
+	j 1b
+
+1:
+	ret
+
+# Probado y testeado

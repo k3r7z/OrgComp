@@ -1,0 +1,8 @@
+# Escribir un programa que reciba un número y cuenta regresivamente hasta 0 con un WHILE
+
+.text
+
+.global main
+
+main:
+	
