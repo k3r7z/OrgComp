@@ -1,24 +1,32 @@
-start:
-	li t0, 6
+	.data
+evenMsg:	.asciz "The number is even"
+oddMsg:		.asciz "The number is odd"
 
-is_pair:
-	add a0, zero, t0
-	li t0, 1
+	.text
+_start:
+	li a0, 6
 
-for:
-	ble a0, t0, end
-	srli a0, a0, 1
+is_even:
+	andi a0, a0, 0b1
+	beqz a0, even
+	jal zero, odd
 
-end:	
-	li a7, 10
+even:
+	lui a0, %hi(evenMsg)
+	addi a0, a0, %lo(evenMsg)
+	addi a7, zero, 4
 	ecall
 
+	addi a0, zero, 1
+	addi a7, zero, 10
+	ecall
 
+odd:	
+	lui a0, %hi(oddMsg)
+	addi a0, a0, %lo(oddMsg)
+	addi a7, zero, 4
+	ecall
 
-
-	
-
-
-
-
-
+	addi a0, zero, 1
+	addi a7, zero, 10
+	ecall
