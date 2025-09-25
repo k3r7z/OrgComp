@@ -1,30 +1,31 @@
 _start:
-	addi t0, zero, 0b1101
+	addi a0, zero, 0b1101
 
 # First parts counts the lenght of the number
-bit_length:
-	addi s0, zero, t0
-	addi s1, zero, 0		# lenght counter
+calculate_length:
+	add t0, a0, zero		# copy the original bit number
+	add t1, zero, zero		# lenght counter
 
 1:
-	beqz s0, _end
-	srli s0, s0, 1
-	addi s1, s1, 1
+	beqz t0, move_lsb_to_msb
+	srli t0, t0, 1
+	addi t1, t1, 1
 	j 1b
 
-# Once the lenght is obtained on t2, it starts the rotation process
+	
+move_lsb_to_msb:
+	# This part of the rotation process consists on taking the LSB 
+	# from the LSB position to the MSB based on the number lenght
+	# calculated before
+	
+	andi t2, a0, 1		# t2 = LSB, used for the rotation
+	addi t1, t1, -1		# t1 = t1 - 1
+	sll t2, t2, t1
+
 rotate:
-	andi s2, t0, 1		# s2 = LSB, used for the rotation
+	srli a0, a0, 1
+	or a0, a0, t2		# a0 = a0 | t2
 
-2:
-	beqz s1, 2f
-	addi s1, s1, -1
-	slli s2, s2, 1
-	j 2b
-
-2:
-	or a0, t0, s2
-
-_end:
+return:
 	li a7, 10
 	ecall
